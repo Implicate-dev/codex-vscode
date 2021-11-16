@@ -1,40 +1,61 @@
 {
   "name": "codex-vscode",
   "description": "vscode extension for GPT3/openai powered code completions.",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "publisher": "implicate-dev",
   "repository": "https://github.com/Implicate-dev/codex-vscode",
   "activationEvents": [
-    "onCommand:extension.CodexComplete"
+    "*"
   ],
   "engines": {
-    "vscode": "^1.1.0"
+    "vscode": "^1.62.0",
+    "node": ">=12"
   },
   "author": "Chris Modjeska <chris@implicate.dev>",
-  "contributors": ["OpenAI Codex (beta.openai.com)"],
+  "contributors": [
+    "OpenAI Codex (beta.openai.com)"
+  ],
   "license": "MIT",
   "main": "./dist/extension.js",
+  "files": [
+    "dist/"
+  ],
   "contributes": {
     "commands": [
       {
         "command": "extension.CodexComplete",
         "title": "Complete with OpenAI Codex"
+      },
+      {
+        "command": "extension.CodexReplaceSelection",
+        "title": "Use Selection a OpenAI Codex Prompt and Replace",
+        "when": "editorHasSelection && !editorHasMultipleSelections"
       }
     ],
     "configuration": {
       "title": "Codex",
       "properties": {
+        "codex.apiKey": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "The api key to use for codex"
+        },
         "codex.engine": {
           "type": "string",
           "default": "davinci-codex",
           "enum": [
             "davinci",
             "davinci-codex",
+            "cushman-codex",
             "ada"
           ],
           "enumDescriptions": [
             "Davinci",
             "Davinci Codex",
+            "Cushman Codex",
             "Ada"
           ],
           "description": "The engine to use for codex"
@@ -64,28 +85,67 @@
           "default": 0,
           "description": "The presence penalty to use for codex"
         },
-        "codex.apiKey": {
-          "type": [
-            "string",
-            "null"
+        "codex.completionEngineEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether or not to use the codex completion engine"
+        },
+        "codex.completionEngine": {
+          "type": "string",
+          "default": "cushman-codex",
+          "enum": [
+            "davinci",
+            "davinci-codex",
+            "cushman-codex",
+            "ada"
           ],
-          "default": null,
-          "description": "The api key to use for codex"
+          "enumDescriptions": [
+            "Davinci",
+            "Davinci Codex",
+            "Cushman Codex",
+            "Ada"
+          ],
+          "description": "The openai completion engine to use for autocompletions"
+        },
+        "codex.completionEngineTimeout": {
+          "type": "number",
+          "default": 5000,
+          "description": "The timeout in ms to use for codex"
+        },
+        "codex.completionEngineDefaultStopSequence": {
+          "type": "string",
+          "default": "\n",
+          "description": "The default stop sequence to use for codex"
         }
       }
     }
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
-    "watch": "parcel ./src/extension.ts -t node",
-    "build": "parcel build ./src/extension.ts -t node",
+    "watch": "parcel watch --target vsix",
+    "build": "parcel build --target vsix",
     "lint": "eslint . --ext .ts,.tsx"
   },
-  "devDependencies": {
-    "eslint": "^7.21.0",
+  "dependencies": {
+    "memoizee": "^0.4.15",
     "openai-api": "git+https://github.com/Sureiya/openai-api.git#patch-1",
-    "parcel-bundler": "^1.12.5",
-    "typescript": "^4.2.2",
-    "vscode": "^1.1.37"
+    "p-memoize": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.62.0",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^7.25.0",
+    "parcel": "^2.0.0",
+    "typescript": "^4.4.4"
+  },
+  "targets": {
+    "vsix": {
+      "source": "src/extension.ts",
+      "distDir": "./dist",
+      "includeNodeModules": { "vscode": false },
+      "optimize": false,
+      "isLibrary": true
+    }
   }
 }
