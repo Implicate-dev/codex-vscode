@@ -25,12 +25,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install # will run `yarn install` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build # will run `yarn build` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: test # will run `yarn test` command
+      - uses: volta-cli/action@v1
+      - run: yarn lint
+      - run: yarn build
