@@ -49,7 +49,6 @@ const getConfig = (config: vscode.WorkspaceConfiguration): CodexConfig => {
 
 const registerExtensionCommands = (
   config: CodexConfig,
-  context: vscode.ExtensionContext
 ): vscode.Disposable[] => {
   const client = new OpenAI(config.apiKey);
   const memComplete = memoized(client.complete, { promise: true });
@@ -168,7 +167,7 @@ export function activate(context: vscode.ExtensionContext) {
   disposables = registerExtensionCommands(getConfig(config), context);
   context.subscriptions.push(...disposables);
   // Listen for configuration changes and reload extension commands
-  let configWatcher = vscode.workspace.onDidChangeConfiguration((e) => {
+  const configWatcher = vscode.workspace.onDidChangeConfiguration((e) => {
     if (e.affectsConfiguration("codex")) {
       config = vscode.workspace.getConfiguration("codex");
       disposables.forEach((disposable) => disposable.dispose());
@@ -178,5 +177,3 @@ export function activate(context: vscode.ExtensionContext) {
   });
   context.subscriptions.push(configWatcher);
 }
-
-export function deactivate() {}
