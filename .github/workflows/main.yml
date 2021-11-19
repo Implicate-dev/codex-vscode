@@ -26,5 +26,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: volta-cli/action@v1
+      - run: yarn install
       - run: yarn lint
       - run: yarn build
