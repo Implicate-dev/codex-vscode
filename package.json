@@ -143,9 +143,15 @@
     "vsix": {
       "source": "src/extension.ts",
       "distDir": "./dist",
-      "includeNodeModules": { "vscode": false },
+      "includeNodeModules": {
+        "vscode": false
+      },
       "optimize": false,
       "isLibrary": true
     }
+  },
+  "volta": {
+    "node": "16.13.0",
+    "yarn": "1.22.17"
   }
 }
