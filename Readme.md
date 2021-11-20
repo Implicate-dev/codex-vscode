@@ -1,5 +1,8 @@
 vscode-codex
 ============
+  [![CI](https://github.com/Implicate-dev/codex-vscode/actions/workflows/main.yml/badge.svg)](https://github.com/Implicate-dev/codex-vscode/actions/workflows/main.yml)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/implicate-dev.codex-vscode)](https://marketplace.visualstudio.com/items?itemName=implicate-dev.codex-vscode)
+
 
 Adds a Codex completion command using the OpenAI codex API. 
 
