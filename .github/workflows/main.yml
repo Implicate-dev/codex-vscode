@@ -31,7 +31,6 @@ jobs:
       - uses: volta-cli/action@v1
       - run: yarn install
       - run: yarn build
-      - run: yarn pretest
       - run: xvfb-run -a yarn test
         if: runner.os == 'Linux'
       - run: yarn test
