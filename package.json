@@ -1,7 +1,7 @@
 {
   "name": "codex-vscode",
   "description": "OpenAI Codex (and more) powered autocompletions.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "implicate-dev",
   "repository": "https://github.com/Implicate-dev/codex-vscode",
   "activationEvents": [
