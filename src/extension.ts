@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import OpenAI from "openai-api";
-import memoized from "memoizee";
+import * as Memoizeed from "memoizee";
 
 // Create new output channel
 const codexChannel = vscode.window.createOutputChannel("OpenAI");
@@ -51,7 +51,7 @@ const registerExtensionCommands = (
   config: CodexConfig,
 ): vscode.Disposable[] => {
   const client = new OpenAI(config.apiKey);
-  const memComplete = memoized(client.complete, { promise: true });
+  const memComplete = Memoizeed(client.complete, { promise: true });
   let disposables: vscode.Disposable[] = [];
   disposables = [
     ...disposables,
@@ -164,14 +164,14 @@ export function activate(context: vscode.ExtensionContext) {
   let config = vscode.workspace.getConfiguration("codex");
   // Add configuration
   let disposables: vscode.Disposable[] = [];
-  disposables = registerExtensionCommands(getConfig(config), context);
+  disposables = registerExtensionCommands(getConfig(config));
   context.subscriptions.push(...disposables);
   // Listen for configuration changes and reload extension commands
   const configWatcher = vscode.workspace.onDidChangeConfiguration((e) => {
     if (e.affectsConfiguration("codex")) {
       config = vscode.workspace.getConfiguration("codex");
       disposables.forEach((disposable) => disposable.dispose());
-      disposables = registerExtensionCommands(getConfig(config), context);
+      disposables = registerExtensionCommands(getConfig(config));
       context.subscriptions.push(...disposables);
     }
   });
