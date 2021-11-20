@@ -1,6 +1,6 @@
 {
   "name": "codex-vscode",
-  "description": "vscode extension for GPT3/openai powered code completions.",
+  "description": "OpenAI Codex (and more) powered autocompletions.",
   "version": "0.1.4",
   "publisher": "implicate-dev",
   "repository": "https://github.com/Implicate-dev/codex-vscode",
@@ -150,10 +150,7 @@
   },
   "targets": {
     "vsix": {
-      "source": [
-        "src/extension.ts",
-        "./src/test/runTest.ts"
-      ],
+      "source": ["src/extension.ts"],
       "distDir": "./dist",
       "includeNodeModules": {
         "vscode": false
