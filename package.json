@@ -5,7 +5,7 @@
   "publisher": "implicate-dev",
   "repository": "https://github.com/Implicate-dev/codex-vscode",
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "engines": {
     "vscode": "^1.62.0",
